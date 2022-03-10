@@ -7,6 +7,8 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.annotation.processing.Generated;
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.UUID;
 
 @Entity
@@ -25,6 +27,9 @@ public class UserEntity {
     @Column(name = "full_name")
     private String fullName;
 
+    @Column(name = "username")
+    private String username;
+
     @Column(name = "password")
     private String password;
 
@@ -36,4 +41,13 @@ public class UserEntity {
 
     @Column(name = "phone")
     private String phone;
+
+    @Column(name = "is_active")
+    private boolean isActive;
+
+    @Column(name = "roles")
+    private String roles;
+
+//    @ManyToMany
+//    private Collection<RoleEntity> roles = new ArrayList<>();
 }

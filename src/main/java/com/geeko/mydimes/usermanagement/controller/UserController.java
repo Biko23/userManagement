@@ -7,7 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.UUID;
 
 @RestController
@@ -18,8 +20,9 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("")
-    public ResponseEntity<?> addUser(UserEntity userEntity) {
-        return new ResponseEntity<>(userService.addUser(userEntity), HttpStatus.OK);
+    public ResponseEntity<?> addUser(@RequestBody UserEntity userEntity) {
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/v1/users/save").toUriString());
+        return new ResponseEntity<>(userService.addUser(userEntity), HttpStatus.CREATED);
     }
 
     @GetMapping("")
@@ -28,7 +31,7 @@ public class UserController {
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<?> findUserById(UUID userId) {
+    public ResponseEntity<?> findUserById(@PathVariable UUID userId) {
         return new ResponseEntity<>(userService.findUserById(userId), HttpStatus.OK);
     }
 
@@ -38,7 +41,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{userId}")
-    public void deleteUser(UUID userId) {
+    public void deleteUser(@PathVariable UUID userId) {
         userService.deleteUser(userId);
     }
 }
